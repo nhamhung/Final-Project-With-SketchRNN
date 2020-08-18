@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='draw.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles_draw.css') }}">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+    <script type="text/javascript" src="https://storage.googleapis.com/quickdraw-models/sketchRNN/models/bird.gen.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='p5.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='numjs.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='sketch_rnn.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='p5.dom.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='simple_predict.js') }}"></script>
+</head>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{url_for('home')}}">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="{{url_for('home')}}">Test Your Skill<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('draw_partial')}}">Practice Partial Drawing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('draw_complete')}}">Practice Full Drawing</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <h1>Drawing Canvas</h1>
+</header>
+<body>
+    <form id = "myForm" action="{{url_for('predict')}}" method="POST" enctype="multipart/form-data">
+        <canvas id="canvas", name ="draw" width="400" height="400">
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    drawCanvas();
+                });
+            </script>
+        </canvas>
+        <input type="hidden" id = 'url' name="url" value="">
+        <!-- <input type="submit" id = 'predict' value="Predict" onclick="return save();"> -->
+        <button type="submit" class="btn btn-dark" id='predict' value="Predict" onclick="return save();">Predict</button>
+    </form>
+    <!-- Example single danger button -->
+    <div class="btn-group">
+      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Available models to test your skills!
+      </button>
+      <div class="dropdown-menu" id='items'>
+        <a class="dropdown-item" data='bird'>Bird</a>
+        <a class="dropdown-item" data='cat'>Cat</a>
+        <a class="dropdown-item" data='angel'>Angel</a>
+        <a class="dropdown-item" data='bicycle'>Bicycle</a>
+        <a class="dropdown-item" data='octopus'>Octopus</a>
+        <a class="dropdown-item" data='spider'>Spider</a>
+        <a class="dropdown-item" data='flower'>Flower</a>
+        <a class="dropdown-item" data='bee'>Bee</a>
+        <a class="dropdown-item" data='mosquito'>Mosquito</a>
+        <a class="dropdown-item" data='owl'>Owl</a>
+        <a class="dropdown-item" data='yoga'>Yoga</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Future Works</a>
+      </div>
+    </div>
+    <div id="sketch"></div>
+      
+</body>
+<!-- Footer -->
+<footer class="page-footer font-small blue pt-4">
+
+  <!-- Footer Links -->
+  <div class="container-fluid text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mt-md-0 mt-3">
+
+        <!-- Content -->
+        <h5 class="text-uppercase">Credits</h5>
+        <p>This work is supported by the following references.</p>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">David Ha</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="https://arxiv.org/abs/1704.03477">A Neural Representation of Sketch Drawings</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Stwind</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="https://github.com/stwind/SketchRNN_tf2">GitHub Repository</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="text-uppercase">Magenta</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="https://github.com/magenta/magenta-demos/tree/master/sketch-rnn-js">Sketch-rnn-js</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+</html>

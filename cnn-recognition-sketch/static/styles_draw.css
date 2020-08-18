@@ -1,0 +1,73 @@
+#canvas {
+    border: 5px;
+    border-style: solid;
+    border-color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nav-link {
+    font-size: 1.5em;
+}
+
+#predict {
+
+    font-size: 2em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+h1 {
+
+    font-size: 5em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 30px 30px;
+}
+
+body {
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#predict {
+
+    border-style: none;
+}
+
+.btn-group {
+    margin-bottom: 30px;
+}
+
+#sketch {
+    border-width: 2px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+select {
+    position: absolute;
+    left: auto;
+    top: 0px;
+}
+
+h2 {
+    padding: 30px;
+}
+h3 {
+    padding: 30px;
+}
+
+footer {
+    margin-top: 30px;
+    background-color: blanchedalmond;
+}
+
