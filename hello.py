@@ -36,13 +36,13 @@ import dataset, models, utils
 
 st.markdown('# Children Drawing Website with SketchRNN!')
 
-image = Image.open('opening.png')
+image = Image.open('presentation/opening.png')
 
 st.image(image, caption="Based on Google's Quick, Draw! Dataset", use_column_width=True)
 
 st.markdown('# What is SketchRNN?')
 
-st.image('sketchrnn.png')
+st.image('presentation/sketchrnn.png')
 
 st.markdown('''
 ## Sequence-to-Sequence Variational Autoencoder
@@ -53,14 +53,14 @@ st.markdown('''
 - Project h into two vectors mu and sigma.
 - Construct a non-deterministic latent vector z that is conditional on the input sketch.
 ''')
-st.image('z.png')
+st.image('presentation/z.png')
 st.markdown('''
 ### Decoder: 
 - Based on z, Construct initial states [h0, c0] with.''')
-st.image('h0.png')
+st.image('presentation/h0.png')
 st.markdown('''
 - Each step i, feed previous point S_i-1 and latent vector z. Output at each time step are parameters for a probability distribution of the next data point S_i.''')
-st.image('yi.png')
+st.image('presentation/yi.png')
 st.markdown('''
 - Vector y_i is broken down into parameters of the probability distribution of the next data point.
 ### When to stop drawing?
@@ -76,7 +76,7 @@ st.markdown('# Load rabbit dataset:')
 data_class = 'rabbit' #@param ["cat","eye","rabbit"]
 
 # allow_pickle set to True and load .npz file
-data = np.load('/Users/nhamquochung/final-project/{}.npz'.format(data_class),encoding='latin1',allow_pickle=True)
+data = np.load('data/{}.npz'.format(data_class),encoding='latin1',allow_pickle=True)
 
 st.markdown('## Data format exploration:')
 data['train'][0]
@@ -205,12 +205,12 @@ sketchrnn.models['full'].summary()
 
 st.header('Model summary: ')
 
-image = Image.open('model.png')
+image = Image.open('presentation/model.png')
 
 st.image(image, caption='Model summary', use_column_width=True)
 
 initial_epoch, initial_loss = 100, 0.06
-checkpoint = os.path.join('/Users/nhamquochung/final-project', 'sketch_rnn_{}_weights.{:02d}_{:.2f}.hdf5').format(data_class, initial_epoch, initial_loss)
+checkpoint = os.path.join('weights/', 'sketch_rnn_{}_weights.{:02d}_{:.2f}.hdf5').format(data_class, initial_epoch, initial_loss)
 sketchrnn.load_weights(checkpoint)
 
 # plot a random sample sketch
@@ -451,12 +451,12 @@ utils.plt_show()
 # anim.save('rabbits_loop.gif', writer='pillow', fps=30)
 # # st.write(HTML(anim.to_html5_video()))
 
-st.image("rabbits_loop.gif")
+st.image("presentation/rabbits_loop.gif")
 
-st.image('image4.png')
-st.image('image1.png')
-st.image('image2.png')
-st.image('image3.png')
+st.image('presentation/image4.png')
+st.image('presentation/image1.png')
+st.image('presentation/image2.png')
+st.image('presentation/image3.png')
 
 
-st.image('diagrams_loops.gif')
+st.image('presentation/diagrams_loops.gif')
